@@ -17,22 +17,26 @@ func lex(input string, charIndex int, accumulator []token.Token) []token.Token {
 		return lex(input, charIndex+1, accumulator)
 	}
 
-	accumulator = append(accumulator, tokenize(input[charIndex]))
+	tok, newCharIndex := tokenize(input, charIndex)
 
-	return lex(input, charIndex+1, accumulator)
+	accumulator = append(accumulator, tok)
+
+	return lex(input, newCharIndex, accumulator)
 }
 
-func tokenize(ch byte) token.Token {
+func tokenize(input string, charIndex int) (tok token.Token, newCharIndex int) {
+	ch := input[charIndex]
+
 	switch ch {
 	case '(':
-		return newToken(token.LEFT_PAREN, ch)
+		return newToken(token.LEFT_PAREN, ch), charIndex + 1
 	case ')':
-		return newToken(token.RIGHT_PAREN, ch)
+		return newToken(token.RIGHT_PAREN, ch), charIndex + 1
 	default:
 		if isDigit(ch) {
-			return newToken(token.NUMBER, ch)
+			return readNumber(input, charIndex)
 		}
-		return newToken(token.UNKNOWN, 0)
+		return newToken(token.UNKNOWN, ch), charIndex + 1
 	}
 }
 
@@ -45,4 +49,28 @@ func newToken(tokenType token.TokenType, ch byte) token.Token {
 
 func isDigit(ch byte) bool {
 	return '0' <= ch && ch <= '9'
+}
+
+func readNumber(input string, charIndex int) (tok token.Token, newCharIndex int) {
+	literalSlice := []byte{input[charIndex]}
+	newCharIndex = charIndex + 1
+	numbersOfPeriod := 0
+
+	for newCharIndex < len(input) &&
+		(isDigit(input[newCharIndex]) || input[newCharIndex] == '.') {
+
+		literalSlice = append(literalSlice, input[newCharIndex])
+
+		if input[newCharIndex] == '.' {
+			numbersOfPeriod = numbersOfPeriod + 1
+		}
+
+		newCharIndex = newCharIndex + 1
+	}
+
+	if numbersOfPeriod > 1 {
+		return token.Token{Type: token.UNKNOWN, Literal: string(literalSlice)}, newCharIndex
+	}
+
+	return token.Token{Type: token.NUMBER, Literal: string(literalSlice)}, newCharIndex
 }
