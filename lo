@@ -4,8 +4,14 @@ set -u
 set -o pipefail
 shopt -s globstar
 
+runner=$0
+
 run() {
   go run **/*[^_test].go
+}
+
+run_watch() {
+  rg --files-with-matches "" | entr $runner run
 }
 
 build() {
@@ -14,6 +20,10 @@ build() {
 
 test() {
   go test **/*.go
+}
+
+test_watch() {
+  rg --files-with-matches "" | entr $runner test
 }
 
 default() {
@@ -26,11 +36,17 @@ tasks() {
   run)
     run
     ;;
+  run:watch)
+    run_watch
+    ;;
   build)
     build
     ;;
   test)
     test
+    ;;
+  test:watch)
+    test_watch
     ;;
   "")
     default
