@@ -22,18 +22,21 @@ default() {
 }
 
 tasks() {
-  case $1 in
-  [run]*)
+  case ${1:-""} in
+  run)
     run
     ;;
-  [build]*)
+  build)
     build
     ;;
-  [test]*)
+  test)
     test
     ;;
-  *)
+  "")
     default
+    ;;
+  *)
+    echo "No tasks defined for $1"
     ;;
   esac
 }
@@ -44,4 +47,4 @@ total_time() {
   unset TIMEFORMAT
 }
 
-total_time tasks "${1:-}"
+total_time tasks ${1:-""}
