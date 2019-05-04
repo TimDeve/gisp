@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -e
+set -u
+set -o pipefail
+shopt -s globstar
+
+run() {
+  go run **/*[^_test].go
+}
+
+build() {
+  go build -o gisp
+}
+
+test() {
+  go test **/*.go
+}
+
+default() {
+  test
+  build
+}
+
+tasks() {
+  case $1 in
+  [run]*)
+    run
+    ;;
+  [build]*)
+    build
+    ;;
+  [test]*)
+    test
+    ;;
+  *)
+    default
+    ;;
+  esac
+}
+
+total_time() {
+  TIMEFORMAT="Total time: %Rs"
+  time $@
+  unset TIMEFORMAT
+}
+
+total_time tasks "${1:-}"
