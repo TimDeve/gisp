@@ -1,7 +1,8 @@
 # Gisp
 
 Gisp is a basic lisp implemented in Golang. Inspired by this
-[article](https://m.stopa.io/risp-lisp-in-rust-90a0dad5b116).
+[article](https://m.stopa.io/risp-lisp-in-rust-90a0dad5b116) and the book
+[Writing An Interpreter In Go](https://interpreterbook.com/).
 
 
 ## Task runner
