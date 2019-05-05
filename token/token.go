@@ -3,14 +3,14 @@ package token
 type TokenType string
 
 const (
-	LEFT_PAREN  TokenType = "LEFT_PAREN"
-	RIGHT_PAREN TokenType = "RIGHT_PAREN"
-	NUMBER      TokenType = "NUMBER"
-	SYMBOL      TokenType = "SYMBOL"
-	UNKNOWN     TokenType = "UNKNOWN"
+	NUMBER  TokenType = "NUMBER"
+	SYMBOL  TokenType = "SYMBOL"
+	UNKNOWN TokenType = "UNKNOWN"
+	SEXP    TokenType = "SEXP"
 )
 
 type Token struct {
-	Type    TokenType
-	Literal string
+	Type     TokenType
+	Literal  string
+	Children []Token
 }
