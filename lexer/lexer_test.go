@@ -79,3 +79,33 @@ func TestShouldReturnUnknownForMalformedFloat(t *testing.T) {
 		t.Errorf("Not equal. Expected:\n%+v\nReceived:\n%+v", expected, result)
 	}
 }
+
+func TestShouldHandleSymbols(t *testing.T) {
+	result := Lex("(+ 2 3.50)")
+	expected := []token.Token{
+		{token.LEFT_PAREN, "("},
+		{token.SYMBOL, "+"},
+		{token.NUMBER, "2"},
+		{token.NUMBER, "3.50"},
+		{token.RIGHT_PAREN, ")"},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
+	}
+}
+
+func TestShouldHandleMultiCharacterSymbols(t *testing.T) {
+	result := Lex("(add 2 3.50)")
+	expected := []token.Token{
+		{token.LEFT_PAREN, "("},
+		{token.SYMBOL, "add"},
+		{token.NUMBER, "2"},
+		{token.NUMBER, "3.50"},
+		{token.RIGHT_PAREN, ")"},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
+	}
+}

@@ -6,6 +6,7 @@ const (
 	LEFT_PAREN  TokenType = "LEFT_PAREN"
 	RIGHT_PAREN TokenType = "RIGHT_PAREN"
 	NUMBER      TokenType = "NUMBER"
+	SYMBOL      TokenType = "SYMBOL"
 	UNKNOWN     TokenType = "UNKNOWN"
 )
 

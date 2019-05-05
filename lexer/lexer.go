@@ -36,7 +36,7 @@ func tokenize(input string, charIndex int) (tok token.Token, newCharIndex int) {
 		if isDigit(ch) {
 			return readNumber(input, charIndex)
 		}
-		return newToken(token.UNKNOWN, ch), charIndex + 1
+		return readSymbol(input, charIndex)
 	}
 }
 
@@ -73,4 +73,19 @@ func readNumber(input string, charIndex int) (tok token.Token, newCharIndex int)
 	}
 
 	return token.Token{Type: token.NUMBER, Literal: string(literalSlice)}, newCharIndex
+}
+
+func readSymbol(input string, charIndex int) (tok token.Token, newCharIndex int) {
+	literalSlice := []byte{input[charIndex]}
+	newCharIndex = charIndex + 1
+
+	for newCharIndex < len(input) &&
+		(input[newCharIndex] != '(' && input[newCharIndex] != ')' && input[newCharIndex] != ' ') {
+
+		literalSlice = append(literalSlice, input[newCharIndex])
+
+		newCharIndex = newCharIndex + 1
+	}
+
+	return token.Token{Type: token.SYMBOL, Literal: string(literalSlice)}, newCharIndex
 }
