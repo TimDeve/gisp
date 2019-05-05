@@ -11,7 +11,7 @@ run() {
 }
 
 run_watch() {
-  rg --files-with-matches "" | entr $runner run
+  rg --files-with-matches "" | entr -c $runner run
 }
 
 build() {
@@ -23,7 +23,7 @@ test() {
 }
 
 test_watch() {
-  rg --files-with-matches "" | entr $runner test
+  rg --files-with-matches "" | entr -c $runner test
 }
 
 default() {
