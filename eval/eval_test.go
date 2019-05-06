@@ -1,4 +1,4 @@
-package main
+package eval
 
 import "testing"
 
@@ -25,4 +25,3 @@ func TestParseFloat(t *testing.T) {
 		t.Errorf(`Eval("1.35") = %f; want 1.35`, result)
 	}
 }
-
