@@ -35,9 +35,21 @@ func Eval(input string) (value.Value, error) {
 }
 
 func EvalExpression(expr value.Sexp) (value.Value, error) {
-	values := expr.GetValue()
-	first := values[0]
-	rest := values[1:len(values)]
+	var newValues []value.Value
+	for _, val := range expr.GetValue() {
+		if val.GetType() == value.SEXP {
+			newVal, err := EvalExpression(val.(value.Sexp))
+			if err != nil {
+				return value.Number{}, err
+			}
+			newValues = append(newValues, newVal)
+		} else {
+			newValues = append(newValues, val)
+		}
+	}
+
+	first := newValues[0]
+	rest := newValues[1:len(newValues)]
 
 	if first.GetType() == value.SYMBOL {
 		v := first.(value.Symbol)
@@ -48,6 +60,6 @@ func EvalExpression(expr value.Sexp) (value.Value, error) {
 		res, err := f(rest)
 		return res, err
 	} else {
-		return expr, nil
+		return value.Sexp{newValues}, nil
 	}
 }

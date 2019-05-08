@@ -99,3 +99,40 @@ func TestEvalReturnsLastValue(t *testing.T) {
 		t.Errorf(`Eval("(+ 1 1) (+ 1 2)") = %f; want 2.0`, result)
 	}
 }
+
+func TestEvalRecursiveExpressions(t *testing.T) {
+	result, err := Eval("(+ 1 (+ 1 2)) ")
+
+	if err != nil {
+		t.Errorf(`Eval("(+ 1 (+ 1 2)) ") returned an error: %s`, err.Error())
+	}
+
+	if result.GetType() != value.NUMBER {
+		t.Errorf(`Did not return a number`)
+		return
+	}
+
+	number := result.(value.Number)
+	if number.GetValue() != 4.0 {
+		t.Errorf(`Eval("(+ 1 (+ 1 2)) ") = %f; want 2.0`, result)
+	}
+}
+
+func TestEvalRecursiveList(t *testing.T) {
+	result, err := Eval("(1 (+ 1 2)) ")
+
+	expected := value.Sexp{
+		[]value.Value{
+			value.Number{1.0},
+			value.Number{3.0},
+		},
+	}
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
