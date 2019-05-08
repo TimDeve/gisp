@@ -49,16 +49,16 @@ func EvalExpression(expr value.Sexp) (value.Value, error) {
 	}
 
 	first := newValues[0]
-	rest := newValues[1:len(newValues)]
 
 	if first.GetType() == value.SYMBOL {
-		v := first.(value.Symbol)
-		f, ok := stdlib.GetLib(v.GetValue())
+		rest := newValues[1:len(newValues)]
+
+		firstSym := first.(value.Symbol)
+		f, ok := stdlib.GetFunc(firstSym.GetValue())
 		if !ok {
 			return value.Number{}, errors.New("Symbol not found")
 		}
-		res, err := f(rest)
-		return res, err
+		return f(rest)
 	} else {
 		return value.Sexp{newValues}, nil
 	}

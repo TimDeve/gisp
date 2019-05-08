@@ -24,7 +24,7 @@ var stdlibMap = map[string]func([]value.Value) (value.Value, error){
 	"add": add,
 }
 
-func GetLib(name string) (lib func([]value.Value) (value.Value, error), ok bool) {
+func GetFunc(name string) (lib func([]value.Value) (value.Value, error), ok bool) {
 	lib, ok = stdlibMap[name]
 	return
 }

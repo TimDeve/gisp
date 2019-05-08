@@ -7,8 +7,16 @@ import (
 	"github.com/TimDeve/gisp/value"
 )
 
+func TestShouldReturnFalseOkWhenFunctionDoesNotExist(t *testing.T) {
+	_, ok := GetFunc("thisshouldnotexist")
+
+	if ok {
+		t.Errorf("GetFunc(\"thisshouldnotexist\") returned true. Expected false")
+	}
+}
+
 func TestShouldAddTwoNumbers(t *testing.T) {
-	add, _ := GetLib("add")
+	add, _ := GetFunc("add")
 
 	expected := value.Number{2.0}
 
