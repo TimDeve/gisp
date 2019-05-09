@@ -7,23 +7,23 @@ shopt -s globstar
 runner=$0
 
 run() {
-  go run *[^_test].go
+  go run *[^_test].go $@
 }
 
 run_watch() {
-  rg --files-with-matches "" | entr -c $runner run
+  rg --files-with-matches "" | entr -c $runner run $@
 }
 
 build() {
-  go build -o gisp
+  go build -o gisp $@
 }
 
 test() {
-  go test ./...
+  go test ./... $@
 }
 
 test_watch() {
-  rg --files-with-matches "" | entr -c $runner test
+  rg --files-with-matches "" | entr -c $runner test $@
 }
 
 default() {
@@ -32,27 +32,29 @@ default() {
 }
 
 tasks() {
-  case ${1:-""} in
+  local task=${1:-""}
+  shift
+  case $task in
   run)
-    run
+    run $@
     ;;
   run:watch)
-    run_watch
+    run_watch $@
     ;;
   build)
-    build
+    build $@
     ;;
   test)
-    test
+    test $@
     ;;
   test:watch)
-    test_watch
+    test_watch $@
     ;;
   "")
     default
     ;;
   *)
-    echo "No tasks defined for $1"
+    echo "No tasks defined for $task"
     ;;
   esac
 }
@@ -63,4 +65,4 @@ total_time() {
   unset TIMEFORMAT
 }
 
-total_time tasks ${1:-""}
+total_time tasks $@
