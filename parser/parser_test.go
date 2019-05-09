@@ -12,12 +12,12 @@ import (
 func TestShouldConvertTokenToValues(t *testing.T) {
 	result, err := Parse([]token.Token{
 		{token.NUMBER, "1.0", nil},
-		{token.SYMBOL, "add", nil},
+		{token.SYMBOL, "+", nil},
 	})
 
 	expected := []value.Value{
 		value.Number{1.0},
-		value.Symbol{"add"},
+		value.Symbol{"+"},
 	}
 
 	if err != nil {
@@ -33,7 +33,7 @@ func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 	result, err := Parse([]token.Token{
 		{token.SEXP, "", []token.Token{
 			{token.NUMBER, "1.0", nil},
-			{token.SYMBOL, "add", nil},
+			{token.SYMBOL, "+", nil},
 		}},
 	})
 
@@ -41,7 +41,7 @@ func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 		value.Sexp{
 			[]value.Value{
 				value.Number{1.0},
-				value.Symbol{"add"},
+				value.Symbol{"+"},
 			},
 		},
 	}

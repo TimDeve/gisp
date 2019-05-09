@@ -13,15 +13,32 @@ func add(values []value.Value) (value.Value, error) {
 			v := val.(value.Number)
 			result = result + v.GetValue()
 		} else {
-			return value.Number{}, errors.New("Add error: value passed not a number")
+			return value.Nothing{}, errors.New("Add error: value passed not a number")
+		}
+	}
+	return value.Number{result}, nil
+}
+
+func substract(values []value.Value) (value.Value, error) {
+	result := 0.0
+	for i, val := range values {
+		if val.GetType() == value.NUMBER {
+			v := val.(value.Number)
+			if i == 0 && len(values) > 1 {
+				result = result + v.GetValue()
+			} else {
+				result = result - v.GetValue()
+			}
+		} else {
+			return value.Nothing{}, errors.New("Add error: value passed not a number")
 		}
 	}
 	return value.Number{result}, nil
 }
 
 var stdlibMap = map[string]func([]value.Value) (value.Value, error){
-	"+":   add,
-	"add": add,
+	"+": add,
+	"-": substract,
 }
 
 func GetFunc(name string) (lib func([]value.Value) (value.Value, error), ok bool) {

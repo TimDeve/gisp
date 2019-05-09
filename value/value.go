@@ -8,14 +8,25 @@ import (
 type ValueType string
 
 const (
-	NUMBER ValueType = "NUMBER"
-	SYMBOL ValueType = "SYMBOL"
-	SEXP   ValueType = "SEXP"
+	NOTHING ValueType = "NOTHING"
+	NUMBER  ValueType = "NUMBER"
+	SYMBOL  ValueType = "SYMBOL"
+	SEXP    ValueType = "SEXP"
 )
 
 type Value interface {
 	GetType() ValueType
 	String() string
+}
+
+type Nothing struct{}
+
+func (n Nothing) GetType() ValueType {
+	return NOTHING
+}
+
+func (n Nothing) String() string {
+	return ""
 }
 
 type Number struct {
