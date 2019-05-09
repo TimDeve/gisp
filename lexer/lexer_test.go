@@ -155,3 +155,18 @@ func TestShouldReturnUnknownForUnclosedParen(t *testing.T) {
 		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
 	}
 }
+
+func TestShouldHandleAllWhiteSpace(t *testing.T) {
+	result := Lex("(1\r2\v\n \f \t 3)")
+	expected := []token.Token{
+		{token.SEXP, "", []token.Token{
+			{token.NUMBER, "1", nil},
+			{token.NUMBER, "2", nil},
+			{token.NUMBER, "3", nil},
+		}},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}

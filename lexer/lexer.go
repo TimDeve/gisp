@@ -13,7 +13,7 @@ func lex(input string, charIndex int, accumulator []token.Token) []token.Token {
 		return accumulator
 	}
 
-	if input[charIndex] == ' ' {
+	if isWhiteSpace(input[charIndex]) {
 		return lex(input, charIndex+1, accumulator)
 	}
 
@@ -34,6 +34,15 @@ func tokenize(input string, charIndex int) (tok token.Token, newCharIndex int) {
 	} else {
 		return readSymbol(input, charIndex)
 	}
+}
+
+func isWhiteSpace(b byte) bool {
+	return b == ' ' ||
+		b == '\n' ||
+		b == '\t' ||
+		b == '\r' ||
+		b == '\v' ||
+		b == '\f'
 }
 
 func isDigit(ch byte) bool {
