@@ -25,15 +25,19 @@ func lex(input string, charIndex int, accumulator []token.Token) []token.Token {
 }
 
 func tokenize(input string, charIndex int) (tok token.Token, newCharIndex int) {
-	ch := input[charIndex]
-
-	if ch == '(' {
+	if input[charIndex] == '(' {
 		return readSexp(input, charIndex)
-	} else if isDigit(ch) {
+	} else if couldBeNumber(input, charIndex) {
 		return readNumber(input, charIndex)
 	} else {
 		return readSymbol(input, charIndex)
 	}
+}
+
+func couldBeNumber(input string, charIndex int) bool {
+	ch := input[charIndex]
+	return isDigit(ch) ||
+		(ch == '-' || ch == '+') && (charIndex+1 <= len(input) && isDigit(input[charIndex+1]))
 }
 
 func isWhiteSpace(b byte) bool {

@@ -22,6 +22,21 @@ func TestShouldLexWithSingleNumber(t *testing.T) {
 	}
 }
 
+func TestShouldLexWithSingleNegativeNumber(t *testing.T) {
+	result := Lex("-1")
+	expected := []token.Token{
+		token.Token{
+			Type:     token.NUMBER,
+			Literal:  "-1",
+			Children: nil,
+		},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
+	}
+}
+
 func TestShouldLexWithListOfSingleNumbers(t *testing.T) {
 	result := Lex("(1 3 4 5)")
 	expected := []token.Token{
