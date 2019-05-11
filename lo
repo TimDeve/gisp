@@ -18,6 +18,14 @@ build() {
   go build -o gisp $@
 }
 
+vet() {
+  go vet ./... $@
+}
+
+fmt() {
+  go fmt ./... $@
+}
+
 test() {
   go test ./... $@
 }
@@ -31,8 +39,14 @@ test_watch() {
 }
 
 default() {
+  fmt
+  echo "Formatted"
+  vet
+  echo "Vetted"
   test_nocache
+  echo "Tested"
   build
+  echo "Built"
 }
 
 tasks() {
@@ -47,6 +61,12 @@ tasks() {
     ;;
   build)
     build $@
+    ;;
+  vet)
+    vet $@
+    ;;
+  fmt)
+    fmt $@
     ;;
   test)
     test $@
