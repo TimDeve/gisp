@@ -11,8 +11,8 @@ import (
 
 func TestShouldConvertTokenToValues(t *testing.T) {
 	result, err := Parse([]token.Token{
-		{token.NUMBER, "1.0", nil},
-		{token.SYMBOL, "+", nil},
+		{Type: token.NUMBER, Literal: "1.0", Children: nil},
+		{Type: token.SYMBOL, Literal: "+", Children: nil},
 	})
 
 	expected := []value.Value{
@@ -31,9 +31,9 @@ func TestShouldConvertTokenToValues(t *testing.T) {
 
 func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 	result, err := Parse([]token.Token{
-		{token.SEXP, "", []token.Token{
-			{token.NUMBER, "1.0", nil},
-			{token.SYMBOL, "+", nil},
+		{Type: token.SEXP, Literal: "", Children: []token.Token{
+			{Type: token.NUMBER, Literal: "1.0", Children: nil},
+			{Type: token.SYMBOL, Literal: "+", Children: nil},
 		}},
 	})
 
@@ -59,8 +59,8 @@ func TestShouldExitWithErrorIfUnknownTokenPresent(t *testing.T) {
 	expectedError := errors.New("Parse error: invalid token")
 
 	_, err := Parse([]token.Token{
-		{token.UNKNOWN, "", nil},
-		{token.NUMBER, "2.0", nil},
+		{Type: token.UNKNOWN, Literal: "", Children: nil},
+		{Type: token.NUMBER, Literal: "2.0", Children: nil},
 	})
 
 	if err == nil {
