@@ -22,18 +22,22 @@ test() {
   go test ./... $@
 }
 
+test_nocache() {
+  test -count=1 $@
+}
+
 test_watch() {
   rg --files-with-matches "" | entr -c $runner test $@
 }
 
 default() {
-  test
+  test_nocache
   build
 }
 
 tasks() {
   local task=${1:-""}
-  shift
+  shift || true
   case $task in
   run)
     run $@
@@ -47,6 +51,9 @@ tasks() {
   test)
     test $@
     ;;
+  test:nocache)
+    test_nocache $@
+    ;;
   test:watch)
     test_watch $@
     ;;
@@ -54,7 +61,7 @@ tasks() {
     default
     ;;
   *)
-    echo "No tasks defined for $task"
+    echo "No tasks defined for \"$task\""
     ;;
   esac
 }
