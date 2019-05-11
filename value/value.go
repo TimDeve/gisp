@@ -5,72 +5,96 @@ import (
 	"strings"
 )
 
-type ValueType string
+type valueType string
 
 const (
-	NOTHING ValueType = "NOTHING"
-	NUMBER  ValueType = "NUMBER"
-	SYMBOL  ValueType = "SYMBOL"
-	SEXP    ValueType = "SEXP"
+	nothing valueType = "nothing"
+	number  valueType = "number"
+	symbol  valueType = "symbol"
+	sexp    valueType = "sexp"
 )
 
 type Value interface {
-	GetType() ValueType
+	getType() valueType
 	String() string
 }
 
 type Nothing struct{}
 
-func (n Nothing) GetType() ValueType {
-	return NOTHING
+func (n Nothing) getType() valueType {
+	return nothing
 }
 
 func (n Nothing) String() string {
 	return ""
 }
 
-type Number struct {
-	Value float64
+func NewNothing() Nothing {
+	return Nothing{}
 }
 
-func (n Number) GetType() ValueType {
-	return NUMBER
+func IsNothing(val Value) bool {
+	return val.getType() == nothing
+}
+
+type Number struct {
+	value float64
+}
+
+func (n Number) getType() valueType {
+	return number
 }
 
 func (n *Number) GetValue() float64 {
-	return n.Value
+	return n.value
 }
 
 func (n Number) String() string {
 	return fmt.Sprint(n.GetValue())
 }
 
-type Symbol struct {
-	Value string
+func NewNumber(val float64) Number {
+	return Number{value: val}
 }
 
-func (s Symbol) GetType() ValueType {
-	return SYMBOL
+func IsNumber(val Value) bool {
+	return val.getType() == number
+}
+
+type Symbol struct {
+	value string
+}
+
+func (s Symbol) getType() valueType {
+	return symbol
 }
 
 func (s *Symbol) GetValue() string {
-	return s.Value
+	return s.value
 }
 
 func (s Symbol) String() string {
 	return s.GetValue()
 }
 
-type Sexp struct {
-	Value []Value
+func NewSymbol(val string) Symbol {
+	return Symbol{value: val}
 }
 
-func (s Sexp) GetType() ValueType {
-	return SEXP
+func IsSymbol(val Value) bool {
+	return val.getType() == symbol
+}
+
+type Sexp struct {
+	value []Value
+}
+
+func (s Sexp) getType() valueType {
+	return sexp
 }
 
 func (s *Sexp) GetValue() []Value {
-	return s.Value
+	return s.value
 }
 
 func (s Sexp) String() string {
@@ -87,4 +111,12 @@ func (s Sexp) String() string {
 
 	str.WriteString(")")
 	return str.String()
+}
+
+func NewSexp(val []Value) Sexp {
+	return Sexp{value: val}
+}
+
+func IsSexp(val Value) bool {
+	return val.getType() == sexp
 }

@@ -15,7 +15,7 @@ func TestEvalInt(t *testing.T) {
 		return
 	}
 
-	if result.GetType() != value.NUMBER {
+	if !value.IsNumber(result) {
 		t.Errorf(`Did not return a number`)
 		return
 	}
@@ -33,7 +33,7 @@ func TestEvalFloat(t *testing.T) {
 		t.Errorf(`Eval("1.35") returned an error: %s`, err.Error())
 	}
 
-	if result.GetType() != value.NUMBER {
+	if !value.IsNumber(result) {
 		t.Errorf(`Did not return a number`)
 		return
 	}
@@ -47,13 +47,13 @@ func TestEvalFloat(t *testing.T) {
 func TestEvalList(t *testing.T) {
 	result, err := Eval("(1 1.0 2.4)")
 
-	expected := value.Sexp{
+	expected := value.NewSexp(
 		[]value.Value{
-			value.Number{1.0},
-			value.Number{1.0},
-			value.Number{2.4},
+			value.NewNumber(1.0),
+			value.NewNumber(1.0),
+			value.NewNumber(2.4),
 		},
-	}
+	)
 
 	if err != nil {
 		t.Errorf("Error: %s", err)
@@ -71,7 +71,7 @@ func TestEvalAdd(t *testing.T) {
 		t.Errorf(`Eval("(+ 1 1)") returned an error: %s`, err.Error())
 	}
 
-	if result.GetType() != value.NUMBER {
+	if !value.IsNumber(result) {
 		t.Errorf(`Did not return a number`)
 		return
 	}
@@ -89,7 +89,7 @@ func TestEvalReturnsLastValue(t *testing.T) {
 		t.Errorf(`Eval("(+ 1 1) (+ 1 2)") returned an error: %s`, err.Error())
 	}
 
-	if result.GetType() != value.NUMBER {
+	if !value.IsNumber(result) {
 		t.Errorf(`Did not return a number`)
 		return
 	}
@@ -107,7 +107,7 @@ func TestEvalRecursiveExpressions(t *testing.T) {
 		t.Errorf(`Eval("(+ 1 (+ 1 2)) ") returned an error: %s`, err.Error())
 	}
 
-	if result.GetType() != value.NUMBER {
+	if !value.IsNumber(result) {
 		t.Errorf(`Did not return a number`)
 		return
 	}
@@ -121,12 +121,12 @@ func TestEvalRecursiveExpressions(t *testing.T) {
 func TestEvalRecursiveList(t *testing.T) {
 	result, err := Eval("(1 (+ 1 2)) ")
 
-	expected := value.Sexp{
+	expected := value.NewSexp(
 		[]value.Value{
-			value.Number{1.0},
-			value.Number{3.0},
+			value.NewNumber(1.0),
+			value.NewNumber(3.0),
 		},
-	}
+	)
 
 	if err != nil {
 		t.Errorf("Error: %s", err)

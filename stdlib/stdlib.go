@@ -9,20 +9,20 @@ import (
 func add(values []value.Value) (value.Value, error) {
 	result := 0.0
 	for _, val := range values {
-		if val.GetType() == value.NUMBER {
+		if value.IsNumber(val) {
 			v := val.(value.Number)
 			result = result + v.GetValue()
 		} else {
-			return value.Nothing{}, errors.New("Add error: value passed not a number")
+			return value.NewNothing(), errors.New("Add error: value passed not a number")
 		}
 	}
-	return value.Number{result}, nil
+	return value.NewNumber(result), nil
 }
 
 func substract(values []value.Value) (value.Value, error) {
 	result := 0.0
 	for i, val := range values {
-		if val.GetType() == value.NUMBER {
+		if value.IsNumber(val) {
 			v := val.(value.Number)
 			if i == 0 && len(values) > 1 {
 				result = result + v.GetValue()
@@ -30,10 +30,10 @@ func substract(values []value.Value) (value.Value, error) {
 				result = result - v.GetValue()
 			}
 		} else {
-			return value.Nothing{}, errors.New("Add error: value passed not a number")
+			return value.NewNothing(), errors.New("Add error: value passed not a number")
 		}
 	}
-	return value.Number{result}, nil
+	return value.NewNumber(result), nil
 }
 
 var stdlibMap = map[string]func([]value.Value) (value.Value, error){

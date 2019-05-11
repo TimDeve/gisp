@@ -16,8 +16,8 @@ func TestShouldConvertTokenToValues(t *testing.T) {
 	})
 
 	expected := []value.Value{
-		value.Number{1.0},
-		value.Symbol{"+"},
+		value.NewNumber(1.0),
+		value.NewSymbol("+"),
 	}
 
 	if err != nil {
@@ -38,12 +38,12 @@ func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 	})
 
 	expected := []value.Value{
-		value.Sexp{
+		value.NewSexp(
 			[]value.Value{
-				value.Number{1.0},
-				value.Symbol{"+"},
+				value.NewNumber(1.0),
+				value.NewSymbol("+"),
 			},
-		},
+		),
 	}
 
 	if err != nil {

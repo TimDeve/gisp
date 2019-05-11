@@ -18,7 +18,7 @@ func TestShouldReturnFalseOkWhenFunctionDoesNotExist(t *testing.T) {
 func TestAddShouldReturnZeroWhenNoArgument(t *testing.T) {
 	add, _ := GetFunc("+")
 
-	expected := value.Number{0}
+	expected := value.NewNumber(0)
 
 	result, err := add([]value.Value{})
 
@@ -34,11 +34,11 @@ func TestAddShouldReturnZeroWhenNoArgument(t *testing.T) {
 func TestShouldAddTwoNumbers(t *testing.T) {
 	add, _ := GetFunc("+")
 
-	expected := value.Number{2.0}
+	expected := value.NewNumber(2.0)
 
 	result, err := add([]value.Value{
-		value.Number{1.0},
-		value.Number{1.0},
+		value.NewNumber(1.0),
+		value.NewNumber(1.0),
 	})
 
 	if err != nil {
@@ -53,14 +53,14 @@ func TestShouldAddTwoNumbers(t *testing.T) {
 func TestShouldAddNNumbers(t *testing.T) {
 	add, _ := GetFunc("+")
 
-	expected := value.Number{15.0}
+	expected := value.NewNumber(15.0)
 
 	result, err := add([]value.Value{
-		value.Number{1.0},
-		value.Number{2.0},
-		value.Number{3.0},
-		value.Number{4.0},
-		value.Number{5.0},
+		value.NewNumber(1.0),
+		value.NewNumber(2.0),
+		value.NewNumber(3.0),
+		value.NewNumber(4.0),
+		value.NewNumber(5.0),
 	})
 
 	if err != nil {
@@ -75,7 +75,7 @@ func TestShouldAddNNumbers(t *testing.T) {
 func TestSubstractShouldReturnZeroWhenNoArgument(t *testing.T) {
 	add, _ := GetFunc("-")
 
-	expected := value.Number{0}
+	expected := value.NewNumber(0)
 
 	result, err := add([]value.Value{})
 
@@ -91,10 +91,10 @@ func TestSubstractShouldReturnZeroWhenNoArgument(t *testing.T) {
 func TestSubstractShouldMakeSingleNumberNegative(t *testing.T) {
 	add, _ := GetFunc("-")
 
-	expected := value.Number{-42}
+	expected := value.NewNumber(-42)
 
 	result, err := add([]value.Value{
-		value.Number{42},
+		value.NewNumber(42),
 	})
 
 	if err != nil {
@@ -109,11 +109,11 @@ func TestSubstractShouldMakeSingleNumberNegative(t *testing.T) {
 func TestSubstractShouldSubstractTwoNumbers(t *testing.T) {
 	add, _ := GetFunc("-")
 
-	expected := value.Number{2.0}
+	expected := value.NewNumber(2.0)
 
 	result, err := add([]value.Value{
-		value.Number{3.0},
-		value.Number{1.0},
+		value.NewNumber(3.0),
+		value.NewNumber(1.0),
 	})
 
 	if err != nil {
@@ -128,14 +128,14 @@ func TestSubstractShouldSubstractTwoNumbers(t *testing.T) {
 func TestSubstractShouldSubtractNNumbers(t *testing.T) {
 	add, _ := GetFunc("-")
 
-	expected := value.Number{1}
+	expected := value.NewNumber(1)
 
 	result, err := add([]value.Value{
-		value.Number{15.0},
-		value.Number{2.0},
-		value.Number{3.0},
-		value.Number{4.0},
-		value.Number{5.0},
+		value.NewNumber(15.0),
+		value.NewNumber(2.0),
+		value.NewNumber(3.0),
+		value.NewNumber(4.0),
+		value.NewNumber(5.0),
 	})
 
 	if err != nil {

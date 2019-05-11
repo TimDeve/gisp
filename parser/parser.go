@@ -45,16 +45,15 @@ func parseNumber(tok token.Token) (num value.Number, err error) {
 	if err != nil {
 		return num, err
 	}
-	num = value.Number{f}
+	num = value.NewNumber(f)
 	return
 }
 
 func parseSymbol(tok token.Token) (sym value.Symbol) {
-	return value.Symbol{tok.Literal}
+	return value.NewSymbol(tok.Literal)
 }
 
-func parseSexp(tok token.Token) (sexp value.Sexp, err error) {
+func parseSexp(tok token.Token) (value.Sexp, error) {
 	vals, err := Parse(tok.Children)
-	sexp.Value = vals
-	return
+	return value.NewSexp(vals), err
 }
