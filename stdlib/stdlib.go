@@ -78,11 +78,34 @@ func greaterThan(values []value.Value) (value.Value, error) {
 	return value.NewBoolean(true), nil
 }
 
+func greaterOrEqual(values []value.Value) (value.Value, error) {
+	if len(values) == 0 || len(values) == 1 {
+		return value.NewBoolean(true), nil
+	}
+
+	for i := 0; i < len(values); i++ {
+		if !value.IsNumber(values[i]) {
+			return value.NewNothing(), errors.New("All arguments must be numbers")
+		}
+		if i != 0 {
+			prevVal := values[i-1].(value.Number)
+			currentVal := values[i].(value.Number)
+
+			if prevVal.GetValue() < currentVal.GetValue() {
+				return value.NewBoolean(false), nil
+			}
+		}
+	}
+
+	return value.NewBoolean(true), nil
+}
+
 var stdlibMap = map[string]func([]value.Value) (value.Value, error){
-	"+": add,
-	"-": substract,
-	"=": equal,
-	">": greaterThan,
+	"+":  add,
+	"-":  substract,
+	"=":  equal,
+	">":  greaterThan,
+	">=": greaterOrEqual,
 }
 
 func GetFunc(name string) (lib func([]value.Value) (value.Value, error), ok bool) {
