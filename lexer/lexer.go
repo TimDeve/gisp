@@ -82,7 +82,7 @@ func readSymbol(input string, charIndex int) (tok token.Token, newCharIndex int)
 	newCharIndex = charIndex + 1
 
 	for newCharIndex < len(input) &&
-		(input[newCharIndex] != '(' && input[newCharIndex] != ')' && input[newCharIndex] != ' ') {
+		(input[newCharIndex] != '(' && input[newCharIndex] != ')' && !isWhiteSpace(input[newCharIndex])) {
 
 		literalSlice = append(literalSlice, input[newCharIndex])
 

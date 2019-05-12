@@ -185,3 +185,17 @@ func TestShouldHandleAllWhiteSpace(t *testing.T) {
 		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
 	}
 }
+
+func TestShouldHandleWhiteSpaceAfterASymbol(t *testing.T) {
+	result := Lex("(add\n3)")
+	expected := []token.Token{
+		{Type: token.SEXP, Literal: "", Children: []token.Token{
+			{Type: token.SYMBOL, Literal: "add", Children: nil},
+			{Type: token.NUMBER, Literal: "3", Children: nil},
+		}},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
