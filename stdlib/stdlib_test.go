@@ -147,6 +147,25 @@ func TestSubstractShouldSubtractNNumbers(t *testing.T) {
 	}
 }
 
+func TestEqualShouldBeReturnErrorWithNoValue(t *testing.T) {
+	equal, ok := GetFunc("=")
+	if !ok {
+		t.Errorf("= function not found")
+		return
+	}
+
+	_, err := equal([]value.Value{})
+
+	if err == nil {
+		t.Errorf("Should return an error")
+		return
+	}
+
+	if err.Error() != "Wrong number of argugments: 0" {
+		t.Errorf("\nError message should be:\nWrong number of argugments: 0\nWas:\n%s", err.Error())
+	}
+}
+
 func TestEqualShouldBeTrueWithOneValue(t *testing.T) {
 	equal, ok := GetFunc("=")
 	if !ok {
