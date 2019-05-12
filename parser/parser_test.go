@@ -29,6 +29,26 @@ func TestShouldConvertTokenToValues(t *testing.T) {
 	}
 }
 
+func TestShouldConvertBooleansToValues(t *testing.T) {
+	result, err := Parse([]token.Token{
+		{Type: token.SYMBOL, Literal: "true", Children: nil},
+		{Type: token.SYMBOL, Literal: "false", Children: nil},
+	})
+
+	expected := []value.Value{
+		value.NewBoolean(true),
+		value.NewBoolean(false),
+	}
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
+
 func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 	result, err := Parse([]token.Token{
 		{Type: token.SEXP, Literal: "", Children: []token.Token{

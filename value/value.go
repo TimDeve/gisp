@@ -9,6 +9,7 @@ type valueType string
 
 const (
 	nothing valueType = "nothing"
+	boolean valueType = "boolean"
 	number  valueType = "number"
 	symbol  valueType = "symbol"
 	sexp    valueType = "sexp"
@@ -35,6 +36,30 @@ func NewNothing() Nothing {
 
 func IsNothing(val Value) bool {
 	return val.getType() == nothing
+}
+
+type Boolean struct {
+	value bool
+}
+
+func (n Boolean) getType() valueType {
+	return boolean
+}
+
+func (n *Boolean) GetValue() bool {
+	return n.value
+}
+
+func (n Boolean) String() string {
+	return fmt.Sprint(n.GetValue())
+}
+
+func NewBoolean(val bool) Boolean {
+	return Boolean{value: val}
+}
+
+func IsBoolean(val Value) bool {
+	return val.getType() == boolean
 }
 
 type Number struct {
