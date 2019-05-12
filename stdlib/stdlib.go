@@ -107,6 +107,7 @@ var stdlibMap = map[string]func([]value.Value) (value.Value, error){
 	">":  greaterThan,
 	">=": greaterOrEqual,
 	"<":  lesserThan,
+	"<=": lesserOrEqual,
 }
 
 func GetFunc(name string) (lib func([]value.Value) (value.Value, error), ok bool) {
