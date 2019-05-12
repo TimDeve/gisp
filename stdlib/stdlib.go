@@ -36,9 +36,28 @@ func substract(values []value.Value) (value.Value, error) {
 	return value.NewNumber(result), nil
 }
 
+func equal(values []value.Value) (value.Value, error) {
+	result := value.NewBoolean(true)
+
+	if len(values) == 0 {
+		return value.NewNothing(), errors.New("Wrong number of argugments: 0")
+	} else if len(values) == 1 {
+		return result, nil
+	}
+
+	for i := 1; i < len(values); i++ {
+		if !values[i].Equals(values[i-1]) {
+			return value.NewBoolean(false), nil
+		}
+	}
+
+	return result, nil
+}
+
 var stdlibMap = map[string]func([]value.Value) (value.Value, error){
 	"+": add,
 	"-": substract,
+	"=": equal,
 }
 
 func GetFunc(name string) (lib func([]value.Value) (value.Value, error), ok bool) {

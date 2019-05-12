@@ -17,6 +17,7 @@ const (
 
 type Value interface {
 	getType() valueType
+	Equals(Value) bool
 	String() string
 }
 
@@ -28,6 +29,10 @@ func (n Nothing) getType() valueType {
 
 func (n Nothing) String() string {
 	return ""
+}
+
+func (n Nothing) Equals(v Value) bool {
+	return IsNothing(v)
 }
 
 func NewNothing() Nothing {
@@ -42,16 +47,24 @@ type Boolean struct {
 	value bool
 }
 
-func (n Boolean) getType() valueType {
+func (b Boolean) getType() valueType {
 	return boolean
 }
 
-func (n *Boolean) GetValue() bool {
-	return n.value
+func (b *Boolean) GetValue() bool {
+	return b.value
 }
 
-func (n Boolean) String() string {
-	return fmt.Sprint(n.GetValue())
+func (b Boolean) String() string {
+	return fmt.Sprint(b.GetValue())
+}
+
+func (b Boolean) Equals(v Value) bool {
+	if IsBoolean(v) {
+		booleanValue := v.(Boolean)
+		return b.GetValue() == booleanValue.GetValue()
+	}
+	return false
 }
 
 func NewBoolean(val bool) Boolean {
@@ -78,6 +91,14 @@ func (n Number) String() string {
 	return fmt.Sprint(n.GetValue())
 }
 
+func (n Number) Equals(v Value) bool {
+	if IsNumber(v) {
+		numberValue := v.(Number)
+		return n.GetValue() == numberValue.GetValue()
+	}
+	return false
+}
+
 func NewNumber(val float64) Number {
 	return Number{value: val}
 }
@@ -100,6 +121,14 @@ func (s *Symbol) GetValue() string {
 
 func (s Symbol) String() string {
 	return s.GetValue()
+}
+
+func (s Symbol) Equals(v Value) bool {
+	if IsSymbol(v) {
+		symbolValue := v.(Symbol)
+		return s.GetValue() == symbolValue.GetValue()
+	}
+	return false
 }
 
 func NewSymbol(val string) Symbol {
@@ -136,6 +165,23 @@ func (s Sexp) String() string {
 
 	str.WriteString(")")
 	return str.String()
+}
+
+func (s Sexp) Equals(v Value) bool {
+	if IsSexp(v) {
+		sexpValue := v.(Sexp)
+		values := sexpValue.GetValue()
+		if len(s.GetValue()) != len(values) {
+			return false
+		}
+		for i, val := range s.GetValue() {
+			if !val.Equals(values[i]) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
 }
 
 func NewSexp(val []Value) Sexp {

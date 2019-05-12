@@ -39,3 +39,33 @@ func TestShouldStringifyNestedSexp(t *testing.T) {
 		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
 	}
 }
+
+func TestShouldCompareSexp(t *testing.T) {
+	sexp1 := Sexp{[]Value{
+		Symbol{"add"},
+		Number{1.0},
+		Number{1.0},
+		Sexp{[]Value{
+			Symbol{"add"},
+			Number{1.0},
+			Number{1.0},
+			Boolean{true},
+		}},
+	}}
+
+	sexp2 := Sexp{[]Value{
+		Symbol{"add"},
+		Number{1.0},
+		Number{1.0},
+		Sexp{[]Value{
+			Symbol{"add"},
+			Number{1.0},
+			Number{1.0},
+			Boolean{true},
+		}},
+	}}
+
+	if !sexp1.Equals(sexp2) {
+		t.Errorf("Not equal")
+	}
+}

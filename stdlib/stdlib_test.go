@@ -146,3 +146,96 @@ func TestSubstractShouldSubtractNNumbers(t *testing.T) {
 		t.Errorf("Not equal.\nExpected:\n%+v\nReceived:\n%+v", expected, result)
 	}
 }
+
+func TestEqualShouldBeTrueWithOneValue(t *testing.T) {
+	equal, ok := GetFunc("=")
+	if !ok {
+		t.Errorf("= function not found")
+		return
+	}
+
+	expected := value.NewBoolean(true)
+
+	result, err := equal([]value.Value{
+		value.NewNumber(15.0),
+	})
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
+
+func TestEqualShouldBeTrueWithEqualValues(t *testing.T) {
+	equal, ok := GetFunc("=")
+	if !ok {
+		t.Errorf("= function not found")
+		return
+	}
+
+	expected := value.NewBoolean(true)
+
+	result, err := equal([]value.Value{
+		value.NewNumber(15.0),
+		value.NewNumber(15.0),
+	})
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
+
+func TestEqualShouldBeTrueWithMoreThanTwoEqualValues(t *testing.T) {
+	equal, ok := GetFunc("=")
+	if !ok {
+		t.Errorf("= function not found")
+		return
+	}
+
+	expected := value.NewBoolean(true)
+
+	result, err := equal([]value.Value{
+		value.NewNumber(15.0),
+		value.NewNumber(15.0),
+		value.NewNumber(15.0),
+		value.NewNumber(15.0),
+	})
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
+
+func TestEqualShouldBeFalseWithDifferentValues(t *testing.T) {
+	equal, ok := GetFunc("=")
+	if !ok {
+		t.Errorf("= function not found")
+		return
+	}
+
+	expected := value.NewBoolean(false)
+
+	result, err := equal([]value.Value{
+		value.NewNumber(15.0),
+		value.NewNumber(1.0),
+	})
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}
