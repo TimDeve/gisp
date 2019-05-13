@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TimDeve/gisp/token"
+	"gisp/token"
 )
 
 func TestShouldLexWithSingleNumber(t *testing.T) {

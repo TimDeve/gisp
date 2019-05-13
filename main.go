@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/TimDeve/gisp/eval"
+	"gisp/eval"
 )
 
 func main() {

@@ -3,10 +3,10 @@ package eval
 import (
 	"errors"
 
-	"github.com/TimDeve/gisp/lexer"
-	"github.com/TimDeve/gisp/parser"
-	"github.com/TimDeve/gisp/stdlib"
-	"github.com/TimDeve/gisp/value"
+	"gisp/lexer"
+	"gisp/parser"
+	"gisp/stdlib"
+	"gisp/value"
 )
 
 func Eval(input string) (value.Value, error) {

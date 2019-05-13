@@ -4,8 +4,8 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/TimDeve/gisp/token"
-	"github.com/TimDeve/gisp/value"
+	"gisp/token"
+	"gisp/value"
 )
 
 func Parse(tokens []token.Token) (values []value.Value, err error) {

@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TimDeve/gisp/token"
-	"github.com/TimDeve/gisp/value"
+	"gisp/token"
+	"gisp/value"
 )
 
 func TestShouldConvertTokenToValues(t *testing.T) {

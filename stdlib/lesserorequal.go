@@ -3,7 +3,7 @@ package stdlib
 import (
 	"errors"
 
-	"github.com/TimDeve/gisp/value"
+	"gisp/value"
 )
 
 func lesserOrEqual(values []value.Value) (value.Value, error) {

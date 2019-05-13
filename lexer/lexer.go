@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"github.com/TimDeve/gisp/token"
+	"gisp/token"
 )
 
 func Lex(input string) []token.Token {

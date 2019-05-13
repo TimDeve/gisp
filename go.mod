@@ -1,1 +1,1 @@
-module github.com/TimDeve/gisp
+module gisp

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TimDeve/gisp/value"
+	"gisp/value"
 )
 
 func TestLesserThanShouldReturnFalseWithNoArguments(t *testing.T) {
