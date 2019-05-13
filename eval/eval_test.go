@@ -108,7 +108,7 @@ func TestEvalRecursiveExpressions(t *testing.T) {
 	}
 
 	if !value.IsNumber(result) {
-		t.Errorf(`Did not return a number`)
+		t.Errorf(`did not return a number`)
 		return
 	}
 

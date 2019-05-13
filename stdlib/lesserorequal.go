@@ -13,7 +13,7 @@ func lesserOrEqual(values []value.Value) (value.Value, error) {
 
 	for i := 0; i < len(values); i++ {
 		if !value.IsNumber(values[i]) {
-			return value.NewNothing(), errors.New("All arguments must be numbers")
+			return value.NewNothing(), errors.New("all arguments must be numbers")
 		}
 		if i != 0 {
 			prevVal := values[i-1].(value.Number)

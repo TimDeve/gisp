@@ -150,7 +150,7 @@ func TestLesserOrEqualThanShouldReturnErrorIfNotAllValuesNumbers(t *testing.T) {
 		return
 	}
 
-	expectedErrorMessage := "All arguments must be numbers"
+	expectedErrorMessage := "all arguments must be numbers"
 
 	_, err := equal([]value.Value{
 		value.NewBoolean(true),

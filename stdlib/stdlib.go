@@ -13,7 +13,7 @@ func add(values []value.Value) (value.Value, error) {
 			v := val.(value.Number)
 			result = result + v.GetValue()
 		} else {
-			return value.NewNothing(), errors.New("Add error: value passed not a number")
+			return value.NewNothing(), errors.New("add error: value passed not a number")
 		}
 	}
 	return value.NewNumber(result), nil
@@ -30,7 +30,7 @@ func substract(values []value.Value) (value.Value, error) {
 				result = result - v.GetValue()
 			}
 		} else {
-			return value.NewNothing(), errors.New("Add error: value passed not a number")
+			return value.NewNothing(), errors.New("add error: value passed not a number")
 		}
 	}
 	return value.NewNumber(result), nil
@@ -40,7 +40,7 @@ func equal(values []value.Value) (value.Value, error) {
 	result := value.NewBoolean(true)
 
 	if len(values) == 0 {
-		return value.NewNothing(), errors.New("Wrong number of argugments: 0")
+		return value.NewNothing(), errors.New("wrong number of argugments: 0")
 	} else if len(values) == 1 {
 		return result, nil
 	}
@@ -63,7 +63,7 @@ func greaterThan(values []value.Value) (value.Value, error) {
 
 	for i := 0; i < len(values); i++ {
 		if !value.IsNumber(values[i]) {
-			return value.NewNothing(), errors.New("All arguments must be numbers")
+			return value.NewNothing(), errors.New("all arguments must be numbers")
 		}
 		if i != 0 {
 			prevVal := values[i-1].(value.Number)
@@ -85,7 +85,7 @@ func greaterOrEqual(values []value.Value) (value.Value, error) {
 
 	for i := 0; i < len(values); i++ {
 		if !value.IsNumber(values[i]) {
-			return value.NewNothing(), errors.New("All arguments must be numbers")
+			return value.NewNothing(), errors.New("all arguments must be numbers")
 		}
 		if i != 0 {
 			prevVal := values[i-1].(value.Number)

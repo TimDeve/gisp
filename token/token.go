@@ -1,16 +1,16 @@
 package token
 
-type TokenType string
+type Type string
 
 const (
-	NUMBER  TokenType = "NUMBER"
-	SYMBOL  TokenType = "SYMBOL"
-	UNKNOWN TokenType = "UNKNOWN"
-	SEXP    TokenType = "SEXP"
+	NUMBER  Type = "NUMBER"
+	SYMBOL  Type = "SYMBOL"
+	UNKNOWN Type = "UNKNOWN"
+	SEXP    Type = "SEXP"
 )
 
 type Token struct {
-	Type     TokenType
+	Type     Type
 	Literal  string
 	Children []Token
 }

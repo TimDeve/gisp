@@ -76,7 +76,7 @@ func TestShouldConvertTokenWithSexpToValues(t *testing.T) {
 }
 
 func TestShouldExitWithErrorIfUnknownTokenPresent(t *testing.T) {
-	expectedError := errors.New("Parse error: invalid token")
+	expectedError := errors.New("parse error: invalid token")
 
 	_, err := Parse([]token.Token{
 		{Type: token.UNKNOWN, Literal: "", Children: nil},

@@ -161,7 +161,7 @@ func TestEqualShouldBeReturnErrorWithNoValue(t *testing.T) {
 		return
 	}
 
-	if err.Error() != "Wrong number of argugments: 0" {
+	if err.Error() != "wrong number of argugments: 0" {
 		t.Errorf("\nError message should be:\nWrong number of argugments: 0\nWas:\n%s", err.Error())
 	}
 }
@@ -266,7 +266,7 @@ func TestGreaterThanShouldReturnErrorIfNotAllValuesNumbers(t *testing.T) {
 		return
 	}
 
-	expectedErrorMessage := "All arguments must be numbers"
+	expectedErrorMessage := "all arguments must be numbers"
 
 	_, err := equal([]value.Value{
 		value.NewBoolean(true),
@@ -426,7 +426,7 @@ func TestGreaterOrEqualThanShouldReturnErrorIfNotAllValuesNumbers(t *testing.T) 
 		return
 	}
 
-	expectedErrorMessage := "All arguments must be numbers"
+	expectedErrorMessage := "all arguments must be numbers"
 
 	_, err := equal([]value.Value{
 		value.NewBoolean(true),

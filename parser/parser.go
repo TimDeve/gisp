@@ -23,7 +23,7 @@ func Parse(tokens []token.Token) (values []value.Value, err error) {
 func parseToken(tok token.Token) (value.Value, error) {
 	switch tok.Type {
 	case token.UNKNOWN:
-		return value.NewNothing(), errors.New("Parse error: invalid token")
+		return value.NewNothing(), errors.New("parse error: invalid token")
 	case token.NUMBER:
 		num, err := parseNumber(tok)
 		if err != nil {
@@ -40,7 +40,7 @@ func parseToken(tok token.Token) (value.Value, error) {
 	case token.SEXP:
 		return parseSexp(tok)
 	default:
-		return value.NewNothing(), errors.New("Parse error: unknown token")
+		return value.NewNothing(), errors.New("parse error: unknown token")
 	}
 }
 

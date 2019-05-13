@@ -51,12 +51,12 @@ func EvalExpression(expr value.Sexp) (value.Value, error) {
 	first := newValues[0]
 
 	if value.IsSymbol(first) {
-		rest := newValues[1:len(newValues)]
+		rest := newValues[1:]
 
 		firstSym := first.(value.Symbol)
 		f, ok := stdlib.GetFunc(firstSym.GetValue())
 		if !ok {
-			return value.NewNothing(), errors.New("Symbol not found")
+			return value.NewNothing(), errors.New("symbol not found")
 		}
 		return f(rest)
 	} else {
