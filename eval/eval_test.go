@@ -136,3 +136,17 @@ func TestEvalRecursiveList(t *testing.T) {
 		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
 	}
 }
+
+func TestEvalBuiltIn(t *testing.T) {
+	result, err := Eval("(if (< 2 3) 1 2)")
+
+	expected := value.NewNumber(1.0)
+
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Not equal.\nExpected:\n%#v\nReceived:\n%#v", expected, result)
+	}
+}

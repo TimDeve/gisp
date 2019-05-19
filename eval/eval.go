@@ -21,7 +21,7 @@ func Eval(input string) (value.Value, error) {
 
 	for _, val := range values {
 		if value.IsSexp(val) {
-			newVal, err := EvalExpression(val.(value.Sexp))
+			newVal, err := evalExpression(val.(value.Sexp))
 			if err != nil {
 				return value.NewNothing(), err
 			}
@@ -34,11 +34,29 @@ func Eval(input string) (value.Value, error) {
 	return newValues[len(values)-1], err
 }
 
-func EvalExpression(expr value.Sexp) (value.Value, error) {
+func evalValue(val value.Value) (value.Value, error) {
+	if value.IsSexp(val) {
+		v := val.(value.Sexp)
+		return evalExpression(v)
+	}
+
+	return val, nil
+}
+
+func evalExpression(expr value.Sexp) (value.Value, error) {
+	values := expr.GetValue()
+	if value.IsSymbol(values[0]) {
+		firstSym := values[0].(value.Symbol)
+		b, ok := getBuiltin(firstSym.GetValue())
+		if ok {
+			return b(values[1:])
+		}
+	}
+
 	var newValues []value.Value
-	for _, val := range expr.GetValue() {
+	for _, val := range values {
 		if value.IsSexp(val) {
-			newVal, err := EvalExpression(val.(value.Sexp))
+			newVal, err := evalExpression(val.(value.Sexp))
 			if err != nil {
 				return value.NewNothing(), err
 			}
@@ -54,12 +72,13 @@ func EvalExpression(expr value.Sexp) (value.Value, error) {
 		rest := newValues[1:]
 
 		firstSym := first.(value.Symbol)
+
 		f, ok := stdlib.GetFunc(firstSym.GetValue())
 		if !ok {
 			return value.NewNothing(), errors.New("symbol not found")
 		}
 		return f(rest)
-	} else {
-		return value.NewSexp(newValues), nil
 	}
+
+	return value.NewSexp(newValues), nil
 }
